@@ -1,31 +1,32 @@
-import { Fragment, useState } from "react";
 import { nanoid } from "nanoid"
+import { useForm } from "react-hook-form";
 
 
 const Create = (props) => {
     const todos = props.todos;
     const settodos = props.settodos;
 
-const [title, settitle] = useState("")
+const {
+    register,  //for two way binding
+    handleSubmit, //submission
+    reset, //for reset form
+    formState: {error}, //for finding error 
+} = useForm()
 
-const submitHandler = (e) => {
-    e.preventDefault();
-// created new data
-    const newtodo = {
-      id: nanoid(),
-      title: title,
-      isCompleted: false,
-    };
-// putting data to set
-    let copytodos = [...todos];
-    copytodos.push(newtodo);
+
+// on submit this it will create an new data
+const submitHandler = (data) => {
+    data.isComplete = false;
+    data.id = nanoid();
+
+const copytodos = [...todos];
+    copytodos.push(data);
     settodos(copytodos);
-    // making the above three line in one line
-    // settodos([...todos, newtodo])
 
-// for empty the title
-    settitle("");
-};
+    reset();
+}
+
+
 
 
   return (
@@ -33,12 +34,10 @@ const submitHandler = (e) => {
         <h1 className="mb-10 text-5xl font-thin">
             Set <span className="text-red-500">Reminder</span> For <br/>Task 
             </h1>
-            <form onSubmit={submitHandler}>
-                <input 
+            <form onSubmit={handleSubmit(submitHandler)}>
+                <input
+                    {...register("title")}
                     className="p-2 border-b w-full text-2xl font-thin outline-0"
-                    onChange={(e) => 
-                    settitle(e.target.value)}
-                    value={title}
                     type= "text" 
                     placeholder="title" 
                 />
