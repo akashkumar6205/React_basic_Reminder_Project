@@ -1,0 +1,5 @@
+/* class is used to remove the globle css because it will change the all css style  of the following tag */
+.read_list_heading{
+    color: tomato;
+}
+/* BEM - Block Element Modifier */
