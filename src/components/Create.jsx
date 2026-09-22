@@ -1,5 +1,6 @@
 import { nanoid } from "nanoid"
 import { useForm } from "react-hook-form";
+import { toast } from "react-toastify";
 
 
 const Create = (props) => {
@@ -22,7 +23,9 @@ const submitHandler = (data) => {
 const copytodos = [...todos];
     copytodos.push(data);
     settodos(copytodos);
-    
+     
+    toast.success("Task Created!")
+
 // for clear the title
     reset();
 }
